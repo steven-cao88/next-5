@@ -38,7 +38,7 @@ class RacingEvent extends Component {
     return (
       <div className="container mt-3 border border-danger p-3">
         <EventHeader event={this.props.event} />
-        <h5 className="m-4">Competitors</h5>
+        <h5 className="m-4 text-uppercase">Competitors</h5>
         <CompetitorList competitors={this.state.competitors} />
       </div>
     );
@@ -52,6 +52,7 @@ class EventHeader extends Component {
         <div className="col-4">
           <h4>{this.props.event.Meeting} Race {this.props.event.RaceNum}</h4>
           <h5>{this.props.event.Description}</h5>
+          <button type="button" className="btn btn-success">Bet Now</button>
         </div>
         <div className="col-8 text-right">
           <div className="row">
@@ -62,7 +63,7 @@ class EventHeader extends Component {
               Race Time: {Util.getTime(this.props.event.SuspendDateTime)}
             </div>
             <div className="col-4 font-weight-bold">
-              Race Status: {this.props.event.Status}
+              Race Status: <span className="text-success">{this.props.event.Status}</span>
             </div>
             <div className="col-4 font-weight-bold">
               Distance: {this.props.event.Distance}
@@ -89,6 +90,8 @@ class CompetitorList extends Component {
         <td>{competitor.Jockey}</td>
         <td>{competitor.Weight}</td>
         <td>{competitor.Barrier}</td>
+        <td>{competitor.VICWin > 0 ? competitor.VICWin : 
+          competitor.DetailedPricing.fixedWin ? 'Fixed Win' : ''}</td>
       </tr>
     );
     return (
@@ -100,6 +103,7 @@ class CompetitorList extends Component {
             <th scope="col">Jockey</th>
             <th scope="col">Weight</th>
             <th scope="col">Barrier</th>
+            <th scope="col">Win</th>
           </tr>
         </thead>
         <tbody>
